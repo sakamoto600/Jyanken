@@ -1,9 +1,39 @@
+#クラスの初期値#
+
+#＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+#クラス　プレーヤー
+#・名前：input()
+#・勝利回数：0
+#・出し手：初期値None
+#
+#クラス　コンピューター
+#・勝利回数：０
+#・出し手：初期値None
+#＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+#Pythonの動的配列と再帰処理
+#再帰処理
+#==========================詳細設計＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+#ステップ０：コンピューターの人数を決める
+#################ループ1start(ループ1：勝ち数判定3)
+#################ループ2start(勝者判定兼残り人数判定)
+#ステップ1：手を決める（プレーヤーもコンピューターも）
+#ステップ2：あいこ判定（3種類、もしくは1種類のみならばあいこになる）
+#ステップ3：二種類しか手がないので、勝ち判定を決める
+#ステップ4：勝ち残った人数が1人でなければ残ったプレイヤーでループ
+#ステップ5：ループを抜けた時のプレイヤーが勝利回数＋１
+#################ループ2end
+#ステップ6：ユーザーもしくはコンピューターの勝ち回数が3になるか判定する。
+#################ループ1end
+#＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
 import random
 Jyanken_list = ["グー", "チョキ", "パー"]
+com_list = []
 
 #親クラスのJyaiken_Playerを作成、名前のみ初期値必要の為、記述
-class Jyaiken_Player:
-    def __init__(self, name):
+class Jyaiken_Player():
+    def __init__(self,name):
         self.player_name = name
         self.win_ratio = 0
         self.signature = None
@@ -19,37 +49,13 @@ class Player_Hands(Jyaiken_Player):
         self.signature = input(self.player_name + "さん、グー・チョキ・パーのいずれかを入力してください： ")
 
 #コンピューターの人数の定義
-com_num = input("コンピューターの人数を決めてください： ")
-com = [Computer_Hands("com1"), Computer_Hands("com2")]
+com_num = int(input("コンピューターの人数を決めてください： "))
+for i in range(com_num):
+    com_list.append(Jyaiken_Player("complayer" + str(i)))
+
+print("コンピューターの人数は%d人に決まりました。" % com_num)
+for i in range(com_num):
+    print(com_list[i].player_name)
 
 #ユーザーの実体化
 ryota = Player_Hands("坂本")
-
-while ryota.win_ratio < 3:
-    print("三回勝負のじゃんけんをしましょう")
-
-
-while True:
-    ryota.Jyanken_Hands_Player()
-
-    if (ryota.signature == yamao.signature):
-        print("あいこです。もう一度。")
-        continue
-    else:
-        if (ryota.signature == "チョキ") and (yamao.signature == "グー"):
-            print("じゃんけんプログラムはグーなので、あなたの負けです。")
-        elif (ryota.signature == "パー") and (yamao.signature == "グー"):
-            print("じゃんけんプログラムはグーなので、あなたの勝ちです。")
-        # プログラムがチョキの時
-        elif (ryota.signature == "グー") and (yamao.signature == "チョキ"):
-            print("じゃんけんプログラムはチョキなので、あなたの勝ちです")
-        elif (ryota.signature == "パー") and (yamao.signature == "チョキ"):
-            print("じゃんけんプログラムはチョキなので、あなたの負けです")
-        # プログラムがパーの時
-        elif (ryota.signature == "グー") and (yamao.signature == "パー"):
-            print("じゃんけんプログラムはパーなので、あなたの負けです")
-        elif (ryota.signature == "チョキ") and (yamao.signature == "パー"):
-            print("じゃんけんプログラムはパーなので、あなたの勝ちです")
-        else:
-            print("グー・チョキ・パーのいずれかをカタカナで指定してください")
-        break
